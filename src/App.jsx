@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import UserDetails from './components/UserDetails';
 
 const App = () => {
-  const mockers = [
+  const [users, setUsers] = useState([
     {
       id: 1,
       username: 'anson',
@@ -22,12 +23,12 @@ const App = () => {
       username: 'pedro',
       email: 'pedro@test.com',
     },
-  ];
+  ]);
 
   return (
     <div className="principal">
-      {mockers.map((user) => (
-        <UserDetails key={user.id} user={user} />
+      {users.map((user) => (
+        <UserDetails key={user.id} user={user} setUsers={setUsers} />
       ))}
     </div>
   );
