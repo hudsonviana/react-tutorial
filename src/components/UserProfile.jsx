@@ -1,18 +1,26 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import UserFavoriteFoods from './UserFavoriteFoods';
+import UserUsername from './UserUsername';
 
-const UserProfile = () => {
+const UserProfile = (props) => {
+  props.callMe();
+
   return (
     <div id="user-profile">
-      <p>Username: Bob</p>
-      <div>
-        <span>Email:</span>
-        <span>hudson@teste.com</span>
-      </div>
+      <UserUsername username={props.username} />
+      <b>Age: </b>
+      <span>{props.age}</span>
 
       <UserFavoriteFoods />
     </div>
   );
+};
+
+UserProfile.propTypes = {
+  username: PropTypes.string.isRequired,
+  age: PropTypes.number.isRequired,
+  callMe: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool,
 };
 
 export default UserProfile;
