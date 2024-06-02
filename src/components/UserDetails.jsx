@@ -16,7 +16,17 @@ const UserDetails = ({ user, setUsers }) => {
         >
           Edit
         </button>
-        <button onClick={() => console.log(user.id)}>Delete</button>
+        <button
+          onClick={() => {
+            setUsers((currentUserState) =>
+              currentUserState.filter(
+                (currentUser) => currentUser.id !== user.id
+              )
+            );
+          }}
+        >
+          Delete
+        </button>
         {isEditing && (
           <button
             onClick={() => {
