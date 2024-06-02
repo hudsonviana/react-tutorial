@@ -1,11 +1,12 @@
-import React from 'react';
+import styles from './styles.module.css';
 
 const UserUsername = (props) => {
   return (
-    <div>
-      <b>Username: </b>
+    <>
+      <b className={styles.username}>Username: </b>
       <span>{props.username}</span>
-    </div>
+      <br />
+    </>
   );
 };
 

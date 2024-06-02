@@ -6,13 +6,13 @@ const UserProfile = (props) => {
   props.callMe();
 
   return (
-    <div id="user-profile">
+    <>
       <UserUsername username={props.username} />
       <b>Age: </b>
       <span>{props.age}</span>
 
       <UserFavoriteFoods />
-    </div>
+    </>
   );
 };
 

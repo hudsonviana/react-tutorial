@@ -1,10 +1,11 @@
 import { createElement } from 'react';
+import styles from './users.module.scss';
 
 const UserFavoriteFoods = () => {
   return createElement(
     'section',
     {},
-    <span>Favorite Foods:</span>,
+    <span className={styles.foodsTitle}>Favorite Foods:</span>,
     <br />,
     <ul>
       <li>Sushi</li>

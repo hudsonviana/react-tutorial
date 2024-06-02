@@ -6,7 +6,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <>
       <h1>Root component</h1>
       <UserProfile
         username="Bob"
@@ -15,7 +15,7 @@ const App = () => {
         favoritesFoos={[{ id: '', name: 'Sushi' }]}
         callMe={callMe}
       />
-    </div>
+    </>
   );
 };
 
