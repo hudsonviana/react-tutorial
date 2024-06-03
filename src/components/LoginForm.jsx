@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useDocumentClick } from '../utils/hooks/useDocumentClick';
 
 const LoginForm = () => {
   useEffect(() => {
@@ -6,20 +7,16 @@ const LoginForm = () => {
       console.log('window redefinido');
     };
 
-    const handleDocumentClick = () => {
-      console.log('Documento clicado');
-    };
-
     window.addEventListener('resize', resizeEventHandler);
-    document.addEventListener('click', handleDocumentClick);
 
     return () => {
       console.log('Unmounting LoginForm');
       console.log('Removing Resize Event Listener');
       window.removeEventListener('resize', resizeEventHandler);
-      document.removeEventListener('click', handleDocumentClick);
     };
   }, []);
+
+  useDocumentClick();
 
   return (
     <form
