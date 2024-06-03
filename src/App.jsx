@@ -1,76 +1,53 @@
-import { useState } from 'react';
-import UserDetails from './components/UserDetails';
+import { useState, useEffect } from 'react';
 
 const App = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [counter, setCounter] = useState(5);
+  const [counter, setCounter] = useState(0);
+  const [sync, setSync] = useState(false);
 
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      username: 'anson',
-      email: 'anson@test.com',
-    },
-    {
-      id: 2,
-      username: 'michael',
-      email: 'michael@test.com',
-    },
-    {
-      id: 3,
-      username: 'mario',
-      email: 'mario@test.com',
-    },
-    {
-      id: 4,
-      username: 'pedro',
-      email: 'pedro@test.com',
-    },
-  ]);
+  useEffect(() => {
+    document.title = 'Tutorial ' + counter;
+  }, [sync]);
+
+  // useEffect(() => {
+  //   fetch('https://jsonplaceholder.typicode.com/users')
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(data))
+  //     .catch((error) => console.log(error));
+  // }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchUsers = async () => {
+      try {
+        const res = await fetch('https://jsonplaceholder.typicode.com/users', {
+          signal: controller.signal,
+        });
+        const data = await res.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUsers();
+    return () => {
+      console.log(controller.signal);
+      controller.abort();
+    };
+  }, []);
+
+  // https://www.youtube.com/watch?v=lAFbKzO-fss&t=4310s
+  // Parei em 4:51:28
 
   return (
-    <div className="principal">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          const newUser = {
-            id: counter,
-            username,
-            email,
-          };
-          setCounter((prevCounter) => prevCounter + 1);
-          setUsers((currentUserState) => [...currentUserState, newUser]);
-        }}
-      >
-        <div>
-          <label htmlFor="username">Username </label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email </label>
-          <input
-            type="text"
-            name="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <button>Add user</button>
-      </form>
-
-      <br />
-
-      {users.map((user) => (
-        <UserDetails key={user.id} user={user} setUsers={setUsers} />
-      ))}
+    <div>
+      <div>Você clicou no botão {counter} vezes.</div>
+      <button onClick={() => setCounter((count) => count + 1)}>
+        Clique aqui
+      </button>
+      <button onClick={() => setSync((currentState) => !currentState)}>
+        Sync
+      </button>
     </div>
   );
 };
