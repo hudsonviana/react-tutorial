@@ -1,15 +1,33 @@
-import { useState, useEffect } from 'react';
-import LoginForm from './components/LoginForm';
+import { useState } from 'react';
+import PostContainer from './components/PostContainer';
+import { UserContext } from './utils/contexts/UserContext';
+import { useFetchUser } from './utils/hooks/useFetchUser';
 
 const App = () => {
-  const [toggle, setToggle] = useState(false);
+  const { user, loading, error } = useFetchUser(4);
+
+  const [userData, setUserData] = useState();
+
+  useEffect(() => {
+    if (!loading && !error && !user) {
+      setUserData(user);
+    }
+  }, [loading, error, user]);
 
   return (
     <div>
-      <button onClick={() => setToggle((currentState) => !currentState)}>
-        Toggle
-      </button>
-      {toggle && <LoginForm />}
+      <UserContext.Provider
+        value={{
+          id: 1,
+          username: 'Hudson',
+          email: 'teste@teste.com',
+          displayname: 'Developer',
+        }}
+      >
+        <div>
+          <PostContainer />
+        </div>
+      </UserContext.Provider>
     </div>
   );
 };
