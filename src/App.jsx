@@ -1,33 +1,47 @@
-import { useState } from 'react';
-import PostContainer from './components/PostContainer';
-import { UserContext } from './utils/contexts/UserContext';
-import { useFetchUser } from './utils/hooks/useFetchUser';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 
 const App = () => {
-  const { user, loading, error } = useFetchUser(4);
-
-  const [userData, setUserData] = useState();
-
-  useEffect(() => {
-    if (!loading && !error && !user) {
-      setUserData(user);
-    }
-  }, [loading, error, user]);
+  const navigate = useNavigate();
 
   return (
     <div>
-      <UserContext.Provider
-        value={{
-          id: 1,
-          username: 'Hudson',
-          email: 'teste@teste.com',
-          displayname: 'Developer',
-        }}
-      >
-        <div>
-          <PostContainer />
-        </div>
-      </UserContext.Provider>
+      <h1>App Page</h1>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home </Link>
+          </li>
+          <li>
+            <Link to="/users">Users </Link>
+          </li>
+          <li>
+            <Link to="/blog-posts">Blog Posts </Link>
+          </li>
+        </ul>
+      </nav>
+      <div>
+        <label htmlFor="data">Enter Data</label>
+        <input
+          type="text"
+          id="data"
+          onChange={(e) => {
+            if (e.target.value.length > 10) {
+              navigate('/blog-posts', {
+                state: {
+                  posts: [
+                    {
+                      id: 1,
+                      title: 'Hello World',
+                      content: 'Welcome to my first post',
+                    },
+                  ],
+                },
+              });
+            }
+          }}
+        />
+      </div>
+      <Outlet />
     </div>
   );
 };
